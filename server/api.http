@@ -1,0 +1,7 @@
+@hostname = localhost
+@port = 3344
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+# App Root
+GET http://{{host}}/
