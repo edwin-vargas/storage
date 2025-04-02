@@ -2,18 +2,19 @@ const express = require('express')
 const PORT = process.env.PORT ?? 1234
 const crypto = require('node:crypto')
 const cors = require('cors')
-
 const bodyParser = require("body-parser")
 const dotenv = require("dotenv")
-const path = require("path")
+const path = require('path')
 const multer = require("multer")
 const { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, CopyObjectCommand } = require("@aws-sdk/client-s3")
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner")
-
+const publicDirectoryPath = path.join(__dirname, '..', 'client')
 dotenv.config()
 
 const app = express()
 app.use(express.json())
+app.use(express.static(publicDirectoryPath))
+
 app.use(cors({
     origin: (origin, callback) => {
       const ACCEPTED_ORIGINS = [
@@ -32,6 +33,7 @@ app.use(cors({
       return callback(new Error('Not allowed by CORS'))
     }
   }))
+
 app.disable('x-powered-by')
 
 const s3 = new S3Client({
@@ -48,7 +50,7 @@ const s3 = new S3Client({
 const BUCKET_NAME = process.env.R2_BUCKET_NAME;
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "json-file-convert.html"));
+  res.sendFile(path.join(publicDirectoryPath, "inicio.html"));
 });
 
 app.post("/file", async (req, res) => {
