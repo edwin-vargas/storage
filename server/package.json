@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "dev": "node --watch main.js"
+    "dev": "node --watch api.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Edwin Vargas",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "4.21.2",
-    "zod": "3.24.2"
+    "zod": "3.24.2",
+    "@aws-sdk/client-s3": "^3.705.0",
+    "@aws-sdk/s3-request-presigner": "^3.705.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "multer": "^1.4.5-lts.1"
   }
 }
