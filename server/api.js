@@ -1,5 +1,5 @@
 const express = require('express')
-const PORT = process.env.PORT ?? 3344
+const PORT = process.env.PORT ?? 1234
 const crypto = require('node:crypto')
 const cors = require('cors')
 
@@ -48,7 +48,7 @@ const s3 = new S3Client({
 const BUCKET_NAME = process.env.R2_BUCKET_NAME;
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "templates/index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "json-file-convert.html"));
 });
 
 app.post("/file", async (req, res) => {
@@ -69,11 +69,6 @@ app.post("/file", async (req, res) => {
       res.status(500).send({ error: error.message });
   }
 });
-
-
-// app.get('/', (req, res) => {
-//     res.send('<h1>Cloud Storage</h1><p>Pending name</p>')
-// })
 
 app.listen(PORT, () => {
     console.log(`server listenig on port http://localhost:${PORT}`)

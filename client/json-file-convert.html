@@ -67,13 +67,14 @@
                     const base64String = await fileToBase64(file);
                     
                     const payload = {
-                        fileName: file.name,
                         fileType: file.type,
                         fileSize: file.size,
-                        fileData: base64String
+                        fileName: file.name,
+                        folder: "user-folder",
+                        content: base64String
                     };
                     
-                    await fetch('http://localhost:3000/file', {
+                    await fetch('http://localhost:1234/file', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
