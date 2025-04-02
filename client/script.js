@@ -86,11 +86,12 @@ uploadButton.addEventListener('click', async () => {
             fileName: file.name,
             fileType: file.type,
             fileSize: file.size,
+            folder: "frida",
             fileData: base64String
         };
         console.log(payload)
         
-        await fetch('http://localhost:3000/file', {
+        await fetch('http://localhost:1234/file', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
