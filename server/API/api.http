@@ -3,5 +3,18 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 
-### App Root
-GET http://{{host}}/file
+### Test GET /file API
+GET http://localhost:1234/file?userName=edwin&fileName=d.json
+Accept: application/json
+
+### Test POST /file API
+POST http://localhost:1234/file
+Content-Type: application/json
+
+{
+  "userName": "edwin",
+  "fileName": "n.json",
+  "fileB64": "eyJrZXkiOiAidmFsdWUifQ=="
+}
+
+}
