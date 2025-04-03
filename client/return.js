@@ -3,34 +3,7 @@ const fileInput = document.getElementById('file-input');
 const fileList = document.createElement('ul');
 const dropzoneText = dropzone.querySelector('p');
 const uploadButton = document.querySelector('.button2 .subir');
-const downloadList = document.createElement('ul'); // Lista para enlaces de descarga
-
-dropzone.appendChild(fileList);
-dropzone.appendChild(downloadList); // Agregar la lista de descarga al dropzone
-
-dropzone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropzone.classList.add('dragover');
-});
-
-dropzone.addEventListener('dragleave', () => {
-    dropzone.classList.remove('dragover');
-});
-
-dropzone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropzone.classList.remove('dragover');
-    fileInput.files = e.dataTransfer.files;
-    displayFiles(e.dataTransfer.files);
-});
-
-dropzone.addEventListener('click', () => {
-    fileInput.click();
-});
-
-fileInput.addEventListener('change', () => {
-    displayFiles(fileInput.files);
-});
+const downloadList = document.getElementById('lista-archivos'); // Cambiamos a lista-archivos
 
 uploadButton.addEventListener('click', async () => {
     if (!fileInput.files.length) return;
@@ -50,8 +23,7 @@ uploadButton.addEventListener('click', async () => {
                 fileData: base64String
             };
 
-            // Subida real al servidor (reemplaza '/api/upload' con tu endpoint)
-            const response = await fetch('/api/upload', {
+            const response = await fetch('/api/upload', { // Reemplaza '/api/upload' con tu endpoint
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -63,10 +35,8 @@ uploadButton.addEventListener('click', async () => {
 
             const responseData = await response.json();
 
-            // Convertir Base64 a archivo (si el servidor devuelve la cadena Base64)
             const convertedFile = base64ToFile(responseData.fileData, responseData.fileName, responseData.fileType);
 
-            // Crear enlace de descarga
             const downloadLink = document.createElement('a');
             downloadLink.href = URL.createObjectURL(convertedFile);
             downloadLink.download = responseData.fileName;
@@ -74,7 +44,7 @@ uploadButton.addEventListener('click', async () => {
 
             const listItem = document.createElement('li');
             listItem.appendChild(downloadLink);
-            downloadList.appendChild(listItem);
+            downloadList.appendChild(listItem); // Usamos downloadList
         }
 
     } catch (error) {

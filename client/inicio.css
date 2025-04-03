@@ -4,6 +4,7 @@ body {
     padding: 0;
     display: flex;
     min-height: 100vh;
+    overflow: hidden; /* Evita que el body tenga scroll */
 }
 
 .sidebar {
@@ -61,7 +62,7 @@ body {
     max-width: 600px;
     height: 300px;
     padding: 30px;
-    border: 2px dashed #ccc;
+    border: 2px dashed #6e6189;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
@@ -136,13 +137,19 @@ body {
     background-color: #f0f0f0;
 }
 
+
+
+
+
 /* Estilos específicos para la página "Mis archivos" */
+
 .mis-archivos-content {
     align-items: flex-start;
-    padding: 20px;
+    padding: 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Evita que el main-content tenga scroll */
 }
 
 .mis-archivos-content h2 {
@@ -150,16 +157,16 @@ body {
     margin-top: 0;
 }
 
-
 #lista-archivos {
     flex-grow: 1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 2px dashed #6e6189;
+    border-radius: 15px;
     padding: 10px;
     width: calc(100% - 20px);
     margin: 10px;
     box-sizing: border-box;
     max-height: calc(90vh - 100px); /* Ajustamos la altura máxima del recuadro */
+    overflow-y: auto; /* Mantenemos el scroll solo para el contenido dentro de la lista */
 }
 
 #lista-archivos li {
