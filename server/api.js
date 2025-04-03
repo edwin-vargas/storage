@@ -1,24 +1,47 @@
 //import zone
 const express = require('express')
+const fs = require('node:fs')
 const path = require('path')
 const cors = require('cors')
-const PORT = process.env.PORT ?? 3000
+const PORT = process.env.PORT ?? 1234
 const publicDirectoryPath = path.join(__dirname, '..', 'client')
 
 //server init
 const app = express()
 app.disable('x-powered-by')
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }));
 app.use(express.static(publicDirectoryPath))
 app.use(cors());
+
+const usersDir = path.join(__dirname, 'users');
+if (!fs.existsSync(usersDir)) {
+    fs.mkdirSync(usersDir, { recursive: true });
+}
 
 //API
 app.get("/", (req, res) => {
   res.sendFile(path.join(publicDirectoryPath, "inicio.html"));
 });
 
-app.post("/file", async (req, res) => {
-  res.status('200').send("up file");
+app.post('/file', (req, res) => {
+    try {
+        const { filename, fileData } = req.body;
+        
+        if (!filename || !fileData) {
+            return res.status(400).json({ error: 'Missing filename or fileData' });
+        }
+        
+        // Decode base64 data
+        const buffer = Buffer.from(fileData, 'base64');
+        
+        // Save file in 'users' directory
+        const filePath = path.join(usersDir, filename);
+        fs.writeFileSync(filePath, buffer);
+        
+        res.json({ message: 'File uploaded successfully', filePath });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error', details: error.message });
+    }
 });
 
 app.listen(PORT, () => {
