@@ -2,7 +2,8 @@ const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('file-input');
 const fileList = document.createElement('ul');
 const dropzoneText = dropzone.querySelector('p');
-const uploadButton = document.getElementById('uploadButton')
+const uploadButton = document.getElementById('uploadButton');
+const downloadList = document.getElementById('lista-archivos'); // Agrega la lista de descarga
 
 dropzone.appendChild(fileList);
 
@@ -40,7 +41,7 @@ function displayFiles(files) {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
         deleteButton.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que el evento click se propague
+            e.stopPropagation();
             removeFile(file);
         });
 
@@ -69,41 +70,55 @@ function toDataTransfer(files) {
     return dataTransfer.files;
 }
 
-//inicio de codigo json-file-convert
-
-uploadButton.addEventListener('click', async () => { 
+// Evento unificado para el botón "Subir"
+uploadButton.addEventListener('click', async () => {
     if (!fileInput.files.length) return;
-    
-    const file = fileInput.files[0];
+
     try {
         uploadButton.disabled = true;
         uploadButton.textContent = 'Uploading...';
-        
-        const base64String = await fileToBase64(file);
-        console.log(base64String)
-        
-        const payload = {
-            fileName: file.name,
-            fileType: file.type,
-            fileSize: file.size,
-            folder: "frida",
-            fileData: base64String
-        };
-        console.log(payload)
-        
-        await fetch('http://localhost:1234/file', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-        
+
+        const files = Array.from(fileInput.files); // Obtiene todos los archivos seleccionados
+        for (const file of files) { // Itera sobre cada archivo
+            const base64String = await fileToBase64(file);
+
+            const payload = {
+                fileName: file.name,
+                fileType: file.type,
+                fileSize: file.size,
+                folder: "frida",
+                fileData: base64String
+            };
+
+            const response = await fetch('http://localhost:1234/file', { // Reemplaza con tu endpoint
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al subir el archivo');
+            }
+
+            const responseData = await response.json();
+
+            const convertedFile = base64ToFile(responseData.fileData, responseData.fileName, responseData.fileType);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(convertedFile);
+            downloadLink.download = responseData.fileName;
+            downloadLink.textContent = `Descargar ${responseData.fileName}`;
+
+            const listItem = document.createElement('li');
+            listItem.appendChild(downloadLink);
+            downloadList.appendChild(listItem); // Agrega el enlace a la lista de descarga
+        }
+
     } catch (error) {
         console.error('Error:', error);
     } finally {
         uploadButton.disabled = false;
-        uploadButton.textContent = 'Upload File';
+        uploadButton.textContent = 'Subir';
     }
 });
 
@@ -117,4 +132,24 @@ function fileToBase64(file) {
         };
         reader.onerror = error => reject(error);
     });
+}
+
+function base64ToFile(base64String, fileName, fileType) {
+    const byteCharacters = atob(base64String);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: fileType });
+    return new File([blob], fileName, { type: fileType });
 }
