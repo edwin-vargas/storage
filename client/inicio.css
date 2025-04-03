@@ -47,6 +47,7 @@ body {
     color: white;
 }
 
+/* Estilos para la página de inicio */
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -56,18 +57,18 @@ body {
 }
 
 .upload-area {
-    width: 80%; /* Ocupa el 80% del ancho del main-content */
-    max-width: 600px; /* Establece un ancho máximo para evitar que se expanda demasiado */
-    height: 300px; /* Establece una altura para el Dropzone */
+    width: 80%;
+    max-width: 600px;
+    height: 300px;
     padding: 30px;
     border: 2px dashed #ccc;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
-    display: flex; /* Agregamos flex para centrar el contenido */
-    flex-direction: column; /* Agregamos flex para centrar el contenido */
-    justify-content: center; /* Agregamos flex para centrar el contenido */
-    align-items: center; /* Agregamos flex para centrar el contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .upload-area p {
@@ -83,15 +84,15 @@ body {
     list-style: none;
     padding: 0;
     margin-top: 20px;
-    width: 100%; /* La lista ocupa todo el ancho del Dropzone */
+    width: 100%;
 }
 
 .upload-area li {
     padding: 10px;
     border-bottom: 1px solid #eee;
-    display: flex; /* Para alinear el texto y el botón en la misma línea */
-    justify-content: space-between; /* Para separar el texto y el botón */
-    align-items: center; /* Para centrar verticalmente el texto y el botón */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .upload-area li button {
@@ -103,20 +104,20 @@ body {
 }
 
 .upload-area li button:hover {
-    background-color: #6e6189; /* Cambia el color al pasar el cursor */
-    color: white; /* Cambia el color del texto para que contraste */
+    background-color: #6e6189;
+    color: white;
 }
 
 .button2 {
     margin-top: 20px;
-    width: 80%; /* El botón ocupa el 80% del ancho del main-content */
-    max-width: 600px; /* Establece un ancho máximo para el botón */
+    width: 80%;
+    max-width: 600px;
 }
 
 .button2 .subir {
     width: 100%;
     padding: 10px 30px;
-    background-color:#6e6189 ;
+    background-color: #6e6189;
     color: white;
     border: none;
     border-radius: 8px;
@@ -133,4 +134,35 @@ body {
 .upload-area.dragover {
     border-color: #6e6189;
     background-color: #f0f0f0;
+}
+
+/* Estilos específicos para la página "Mis archivos" */
+.mis-archivos-content {
+    align-items: flex-start;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mis-archivos-content h2 {
+    align-self: flex-start;
+    margin-top: 0;
+}
+
+
+#lista-archivos {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 10px;
+    box-sizing: border-box;
+    max-height: calc(90vh - 100px); /* Ajustamos la altura máxima del recuadro */
+}
+
+#lista-archivos li {
+    max-height: 50px; /* Limita la altura de los elementos de la lista */
+    overflow: hidden; /* Oculta el contenido que excede la altura */
 }
