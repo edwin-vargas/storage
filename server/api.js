@@ -11,7 +11,26 @@ const app = express()
 app.disable('x-powered-by')
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(publicDirectoryPath))
-app.use(cors());
+app.use(cors({
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        'http://localhost:8080',
+        'http://localhost:1234',
+        'https://movies.com',
+        'https://midu.dev'
+      ]
+  
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null, true)
+      }
+  
+      if (!origin) {
+        return callback(null, true)
+      }
+  
+      return callback(new Error('Not allowed by CORS'))
+    }
+  }))
 
 const usersDir = path.join(__dirname, 'users');
 if (!fs.existsSync(usersDir)) {
