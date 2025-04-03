@@ -1,20 +1,3 @@
-@hostname = localhost
-@port = 3344
-@host = {{hostname}}:{{port}}
-@contentType = application/json
-
-### Test GET /file API
-GET http://localhost:1234/file?userName=edwin&fileName=d.json
+### get file
+GET http://localhost:1234/files/edwin
 Accept: application/json
-
-### Test POST /file API
-POST http://localhost:1234/file
-Content-Type: application/json
-
-{
-  "userName": "edwin",
-  "fileName": "n.json",
-  "fileB64": "eyJrZXkiOiAidmFsdWUifQ=="
-}
-
-}
