@@ -11,10 +11,10 @@ if (!response.ok) {
 }
 
 const responseData = await response.json();
-
+//for each file in responseData.files
 const downloadLink = document.createElement('a');
 downloadLink.href = URL.createObjectURL(convertedFile);
-downloadLink.download = responseData.fileName;
+downloadLink.download = file.fileName;
 downloadLink.textContent = `Descargar ${responseData.fileName}`;
 
 const listItem = document.createElement('li');

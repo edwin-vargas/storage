@@ -3,8 +3,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "name": "edwin",
-  "email": "edwin@example.com",
+  "name": "aurora",
+  "email": "aurora@example.com",
   "password": "123456"
 }
 
@@ -13,12 +13,12 @@ POST http://localhost:3000/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "edwin@example.com",
+  "email": "aurora@example.com",
   "password": "123456"
 }
 
 ### Get all files of a user
-GET http://localhost:3000/files?name=citlalli
+GET http://localhost:3000/files?name=edwin
 Content-Type: application/json
 
 

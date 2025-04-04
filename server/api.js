@@ -160,7 +160,7 @@ app.get('/files', (req, res) => {
 });
 
 app.get('/file', (req, res) => {
-    const { user_id, fileName } = req.body;  // Get the user_id from the query parameter
+    const { user_id, fileName } = req.query;  // Get the user_id from the query parameter
 
     if (!user_id) {
         return res.status(400).json({ message: 'User ID is required' });

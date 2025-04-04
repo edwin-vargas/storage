@@ -85,7 +85,7 @@ uploadButton.addEventListener('click', async () => {
 
         const file = fileInput.files[0];
 
-        //localStorage.setItem('name', 'edwin')
+        localStorage.setItem('name', 'edwin')
         userName = localStorage.getItem('name')
 
         const formData = new FormData();

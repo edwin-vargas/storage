@@ -172,7 +172,19 @@ body {
     max-height: calc(90vh - 100px); 
     overflow-y: auto; 
 }
+
 #lista-archivos li {
     max-height: 50px;
     overflow: hidden; 
+    margin-bottom: 10px; /* Espaciado entre los elementos de la lista */
+}
+
+#lista-archivos a {
+    color: #6e6189;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#lista-archivos a:hover {
+    color: #9b7cc0;
 }
