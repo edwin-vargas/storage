@@ -6,7 +6,6 @@ const multer = require('multer');
 
 const db = require('./db');
 const command = require('./command.js');
-const checkUserLoggedIn = require('./middleware');
 
 const app = express();
 const PORT = 3000;
@@ -14,7 +13,6 @@ const PORT = 3000;
 app.disable('x-powered-by')
 app.use(cors());
 app.use(express.json());
-// app.use('/some-protected-route', checkUserLoggedIn);
 db.start();
 // const publicDirectoryPath = path.join(__dirname, '..', 'client')
 const publicDirectoryPath = path.join(__dirname, 'templates')
@@ -22,9 +20,8 @@ app.use(express.static(publicDirectoryPath))
 app.use(cors({
 	origin: (origin, callback) => {
 		const ACCEPTED_ORIGINS = [
-			'http://localhost:8080',
-			'http://localhost:1234',
-			'http://localhost:3000'
+			'http://localhost:3000',
+			'https://gmq17x09-3000.usw3.devtunnels.ms'
 		]
 
 		if (ACCEPTED_ORIGINS.includes(origin)) {
@@ -80,7 +77,8 @@ app.post('/login', (req, res) => {
             message: '✅ Login successful',
             user: {
                 id: user.id,
-                email: user.email
+                email: user.email,
+				name: user.name
             }
         });
     });
@@ -105,7 +103,7 @@ app.post('/file', upload.single('file'), (req, res) => {
 	const filePathParam = `--file=${path.join(__dirname, filePath)}`;
 
 	
-	// command.run("npx", ["wrangler", "r2", "object", "put", filePath, filePathParam, "--remote"]);
+	command.run("npx", ["wrangler", "r2", "object", "put", filePath, filePathParam, "--remote"]);
 
 	// Then get user ID and save file info
 	db.getUserIdByName(name, (err, userId) => {
@@ -127,6 +125,75 @@ app.post('/file', upload.single('file'), (req, res) => {
 		});
 	});
 });
+
+app.get('/files', (req, res) => {
+    const { name } = req.query;  // Assuming the user sends their name as a query parameter (e.g., /files?name=JohnDoe)
+    
+    if (!name) {
+        return res.status(400).json({ message: 'User name is required' });
+    }
+
+    // Get the user ID based on the name
+    db.getUserIdByName(name, (err, userId) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error retrieving user ID' });
+        }
+
+        if (!userId) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Get the files for the user
+        db.GetUserFiles(userId, (err, files) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error retrieving user files' });
+            }
+
+            if (files.length === 0) {
+                return res.status(404).json({ message: 'No files found for this user' });
+            }
+
+            // Respond with the list of files
+            res.json({ files });
+        });
+    });
+});
+
+app.get('/file', (req, res) => {
+    const { user_id, fileName } = req.body;  // Get the user_id from the query parameter
+
+    if (!user_id) {
+        return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    db.getUserById(user_id, (err, user) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error retrieving user data' });
+        }
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+
+        const userName = user.name;
+		const fileLocation = path.join(userName, fileName)
+		const workingDir = path.join(__dirname, userName)
+
+		command.runD(
+			'npx', 
+			['wrangler', 'r2', 'object', 'get', fileLocation, '--remote'],
+			workingDir
+		)
+		filePath = path.join(__dirname, userName, fileName)
+		res.sendFile(filePath, (err) => {
+			if (err) {
+				return res.status(500).json({ message: 'Error sending the file' });
+			}
+		});
+    });
+});
+
 
 
 app.listen(PORT, () => {

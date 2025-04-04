@@ -1,0 +1,178 @@
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden; 
+}
+
+.sidebar {
+    background-color: #f0f0f0;
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 50px;
+    height: auto;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 3px;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: block;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #6e6189;
+    color: white;
+}
+
+
+
+
+/* Estilos para la página de inicio */
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-area {
+    width: 80%;
+    max-width: 600px;
+    height: 300px;
+    padding: 30px;
+    border: 2px dashed #6e6189;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-area p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-area ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.upload-area li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upload-area li button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-area li button:hover {
+    background-color: #6e6189;
+    color: white;
+}
+
+.button2 {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.button2 .subir {
+    width: 100%;
+    padding: 10px 30px;
+    background-color: #6e6189;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.button2 .subir:hover {
+    background-color: #362656;
+    color: white;
+}
+
+.upload-area.dragover {
+    border-color: #6e6189;
+    background-color: #f0f0f0;
+}
+
+
+
+
+
+/* Estilos específicos para la página "Mis archivos" */
+
+.mis-archivos-content {
+    align-items: flex-start;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.mis-archivos-content h2 {
+    align-self: flex-start;
+    margin-top: 0;
+}
+
+#lista-archivos {
+    flex-grow: 1;
+    border: 2px dashed #6e6189;
+    border-radius: 15px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 10px;
+    box-sizing: border-box;
+    max-height: calc(90vh - 100px); 
+    overflow-y: auto; 
+}
+#lista-archivos li {
+    max-height: 50px;
+    overflow: hidden; 
+}

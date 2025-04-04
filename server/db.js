@@ -66,6 +66,17 @@ function GetUserFiles(user_id, callback) {
     );
 }
 
+function getUserById(user_id, callback) {
+    db.get('SELECT * FROM users WHERE id = ?', [user_id], (err, row) => {
+        if (err) {
+            console.error('Error fetching user by ID:', err);
+            return callback(err, null);
+        }
+        callback(null, row);  // Return the user data if found
+    });
+}
+
+
 
 module.exports = {
     start,
@@ -73,5 +84,6 @@ module.exports = {
     insertUser,
     getUserIdByName,
     SaveFileInfo,
-    GetUserFiles
+    GetUserFiles,
+    getUserById
 };

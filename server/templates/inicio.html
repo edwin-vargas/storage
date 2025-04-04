@@ -3,13 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload Test</title>
+    <title>Pagina Principal</title>
+    <link rel="stylesheet" href="inicio.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <aside class="sidebar">
+        <div class="logo-container">
+            <img src="./imagenes/Free-Logos-Transparent-PNG.png" alt="Logo de la página" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="inicio.html">Subir archivos</a></li>
+                <li><a href="return.html">Mis archivos</a></li>
+                <li><a href="sing_in.html">Iniciar sesion</a></li>
+                <li><a href="registrarse.html">Registrarse</a></li>
+            </ul>
+        </nav>
+    </aside>
 
+    <main class="main-content">
+        <div class="upload-area" id="dropzone">
+            <p>Arrastra y suelta tus archivos aquí o haz clic para seleccionar.</p>
+            <input type="file" id="file-input" class="file-input" multiple>
+        </div>
+        <div class="button2">
+            <input type="submit" value="Subir" class="subir" id="uploadButton">
+        </div>
+    </main>
+
+    <p id="message"></p> 
+
+    <script src="script.js"></script>
+
+<!--         
     <h1>Upload File</h1>
 
-    <!-- Form for file upload -->
+    
     <form id="uploadForm">
         <label for="name">User Name:</label>
         <input type="text" id="name" name="name" required>
@@ -22,9 +54,10 @@
         <button type="submit">Upload File</button>
     </form>
 
-    <p id="message"></p>
+    <p id="message"></p> 
+-->
 
-    <script>
+    <!-- <script>
         // Handle form submission
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();  // Prevent default form submission
@@ -43,7 +76,7 @@
             formData.append("file", file);
 
             // Send the file via fetch API
-            fetch('http://localhost:3000/file', {
+            fetch('https://gmq17x09-3000.usw3.devtunnels.ms/file', {
                 method: 'POST',
                 body: formData
             })
@@ -60,7 +93,7 @@
                 document.getElementById('message').textContent = `Error: ${error.message}`;
             });
         });
-    </script>
+    </script> -->
 
 </body>
 </html>
