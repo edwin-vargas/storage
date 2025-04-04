@@ -4,7 +4,7 @@ body {
     padding: 0;
     display: flex;
     min-height: 100vh;
-    overflow: hidden; /* Evita que el body tenga scroll */
+    overflow: hidden; 
 }
 
 .sidebar {
@@ -48,7 +48,11 @@ body {
     color: white;
 }
 
+
+
+
 /* Estilos para la página de inicio */
+
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -149,7 +153,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Evita que el main-content tenga scroll */
+    overflow: hidden;
 }
 
 .mis-archivos-content h2 {
@@ -165,11 +169,10 @@ body {
     width: calc(100% - 20px);
     margin: 10px;
     box-sizing: border-box;
-    max-height: calc(90vh - 100px); /* Ajustamos la altura máxima del recuadro */
-    overflow-y: auto; /* Mantenemos el scroll solo para el contenido dentro de la lista */
+    max-height: calc(90vh - 100px); 
+    overflow-y: auto; 
 }
-
 #lista-archivos li {
-    max-height: 50px; /* Limita la altura de los elementos de la lista */
-    overflow: hidden; /* Oculta el contenido que excede la altura */
+    max-height: 50px;
+    overflow: hidden; 
 }

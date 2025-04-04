@@ -44,7 +44,7 @@ uploadButton.addEventListener('click', async () => {
 
             const listItem = document.createElement('li');
             listItem.appendChild(downloadLink);
-            downloadList.appendChild(listItem); // Usamos downloadList
+            downloadList.appendChild(listItem); // Usamos downloadList que es eso??
         }
 
     } catch (error) {

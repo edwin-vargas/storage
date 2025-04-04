@@ -1,5 +1,3 @@
-/* Minimalist UI CSS */
-
 :root {
     --primary-color: #6e6189;
     --primary-dark: #414141;
@@ -93,7 +91,7 @@ input[type="email"]:focus, input[type="password"]:focus {
 
 button {
     width: 100%;
-    max-width: 300px; /* Ajusta el tamaño del botón */
+    max-width: 300px; 
     padding: px;
     background: var(--primary-color);
     color: white;
@@ -103,7 +101,7 @@ button {
     cursor: pointer;
     transition: var(--transition);
     margin-top: 30px;
-    margin-bottom: 20px; /* Reduce la separación del botón con el texto de registro */
+    margin-bottom: 20px;
     text-align: center;
     display: block;
     margin-left: auto;
@@ -125,7 +123,7 @@ button:hover {
 
 .sing-up {
     text-align: center;
-    margin-top: 10px; /* Ajusta la separación con el botón */
+    margin-top: 10px; 
     color: var(--text-color);
 }
 

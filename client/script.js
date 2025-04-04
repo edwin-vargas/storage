@@ -90,7 +90,7 @@ uploadButton.addEventListener('click', async () => {
                 fileData: base64String
             };
 
-            const response = await fetch('http://localhost:1234/file', { // Reemplaza con tu endpoint
+            const response = await fetch('http://localhost:1234/file', { // Reemplaza con tu endpoint xds
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

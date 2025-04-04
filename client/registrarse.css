@@ -1,5 +1,3 @@
-/* Minimalist UI CSS */
-
 :root {
     --primary-color: #6e6189;
     --primary-dark: #362656;
@@ -16,11 +14,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Asegura que el cuerpo ocupe al menos el 100% de la altura */
+    min-height: 100vh;
     margin: 0;
     flex-direction: column;
     padding: 20px 0;
-    overflow: hidden; /* Desactiva el desplazamiento global */
+    overflow: hidden;
 }
 
 .login-header {
@@ -39,12 +37,12 @@ body {
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 450px; /* Aumenta el ancho del formulario */
+    max-width: 450px; 
     width: 100%;
     margin-top: 20px;
-    margin-bottom: 40px; /* Aumenta el margen inferior */
-    overflow-y: auto; /* Permite el desplazamiento dentro del contenedor */
-    max-height: 80vh; /* Limita la altura del contenedor y permite desplazamiento */
+    margin-bottom: 40px; 
+    overflow-y: auto; 
+    max-height: 80vh; 
 }
 
 .login-header p {
@@ -123,18 +121,21 @@ button:hover {
 .text-link:hover {
     text-decoration: underline;
 }
+
+
+
 /* Estilos para el Modal */
 .modal {
-    display: none; /* Oculta el modal por defecto */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    background-color: rgba(0, 0, 0, 0.5); 
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegura que el modal esté por encima del resto del contenido */
+    z-index: 1000; 
 }
 
 .modal-content {
