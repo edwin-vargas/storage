@@ -1,3 +1,20 @@
-### get file
-GET http://localhost:1234/files/edwin
-Accept: application/json
+### Register a new user
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "name": "frida2",
+  "email": "frida2@example.com",
+  "password": "123456"
+}
+
+###
+
+### Login with the registered user
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "frida2@example.com",
+  "password": "123456"
+}
