@@ -14,8 +14,8 @@ app.disable('x-powered-by')
 app.use(cors());
 app.use(express.json());
 db.start();
-// const publicDirectoryPath = path.join(__dirname, '..', 'client')
-const publicDirectoryPath = path.join(__dirname, 'templates')
+const publicDirectoryPath = path.join(__dirname, '..', 'client')
+// const publicDirectoryPath = path.join(__dirname, 'templates')
 app.use(express.static(publicDirectoryPath))
 app.use(cors({
 	origin: (origin, callback) => {
@@ -56,7 +56,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+//----------------------------------------------------------
 app.get("/", (req, res) => {
   res.sendFile(path.join(publicDirectoryPath, "inicio.html"));
 });
