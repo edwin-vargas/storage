@@ -92,28 +92,42 @@ app.post('/register', (req, res) => {
     db.insertUser(name, email, password, function (err) {
         if (err) return res.status(500).json({ message: 'DB Error' });
 
+				command.run("npx", ["wrangler", "r2", "bucket", "create", name]);
+
         res.json({ message: '✅ User registered successfully' });
     });
 });
 
 app.post('/file', upload.single('file'), (req, res) => {
-	const name = req.body.
-	const fileName = req.file.originalname
-	const filePath = path.join(__dirname, name, fileName);
-	const filePathParam = `--File=${filePath}`
+	const name = req.body.name;
+	const fileName = req.file.originalname;
+	const filePath = path.join(name, fileName);
+	const filePathParam = `--file=${path.join(__dirname, filePath)}`;
 
-	console.log('name', name)
-	console.log("fileName", fileName) 
-	console.log('filePath',filePath)
-	console.log("filePathParam", filePathParam)
+	
+	// command.run("npx", ["wrangler", "r2", "object", "put", filePath, filePathParam, "--remote"]);
 
-	console.log(`File saved at: ${filePath}`);
+	// Then get user ID and save file info
+	db.getUserIdByName(name, (err, userId) => {
+		if (err) {
+			return res.status(500).json({ message: 'Error retrieving user ID' });
+		}
 
-	command.run["npx", ["wrangler", "r2", "bucket", "create", req.body.name]]
-	command.run["npx", ["wrangler", "r2", "object", "put", filePath, filePathParam]]
+		if (!userId) {
+			return res.status(404).json({ message: 'User not found' });
+		}
 
-	res.json({ message: '✅ File uploaded successfully', filePath: filePath });
+		db.SaveFileInfo(fileName, userId, (err) => {
+			if (err) {
+				return res.status(500).json({ message: 'Error saving file info' });
+			}
+
+			// ✅ Only send response once, after everything is done
+			res.json({ message: '✅ File uploaded successfully', filePath: filePath });
+		});
+	});
 });
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
