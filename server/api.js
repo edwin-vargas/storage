@@ -6,7 +6,7 @@ const multer = require('multer');
 
 const db = require('./db');
 const command = require('./command.js');
-const checkUserLoggedIn = require('./middleware'); 
+const checkUserLoggedIn = require('./middleware');
 
 const app = express();
 const PORT = 3000;
@@ -16,13 +16,15 @@ app.use(cors());
 app.use(express.json());
 // app.use('/some-protected-route', checkUserLoggedIn);
 db.start();
-const publicDirectoryPath = path.join(__dirname, '..', 'client')
+// const publicDirectoryPath = path.join(__dirname, '..', 'client')
+const publicDirectoryPath = path.join(__dirname, 'templates')
 app.use(express.static(publicDirectoryPath))
 app.use(cors({
 	origin: (origin, callback) => {
 		const ACCEPTED_ORIGINS = [
 			'http://localhost:8080',
-			'http://localhost:1234'
+			'http://localhost:1234',
+			'http://localhost:3000'
 		]
 
 		if (ACCEPTED_ORIGINS.includes(origin)) {
@@ -39,7 +41,7 @@ app.use(cors({
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-			const dir = path.join('cloud', req.body.name);
+			const dir = req.body.name
 
 			// Check if the directory exists
 			if (!fs.existsSync(dir)) {
@@ -69,7 +71,7 @@ app.post('/login', (req, res) => {
         if (err) return res.status(500).json({ message: 'DB Error' });
 
         if (!user) return res.status(401).json({ message: 'User not found' });
-				
+
         if (password !== user.password) {
             return res.status(401).json({ message: 'Invalid password' });
         }
@@ -90,31 +92,28 @@ app.post('/register', (req, res) => {
     db.insertUser(name, email, password, function (err) {
         if (err) return res.status(500).json({ message: 'DB Error' });
 
-        const dir = path.join('cloud', name);
-        console.log(`Creating directory: ${dir}`);
-        command.run("mkdir", [dir]);
-
         res.json({ message: '✅ User registered successfully' });
     });
 });
 
-app.post('/file', (req, res) => {
-	const { name, file } = req.body;
+app.post('/file', upload.single('file'), (req, res) => {
+	const name = req.body.
+	const fileName = req.file.originalname
+	const filePath = path.join(__dirname, name, fileName);
+	const filePathParam = `--File=${filePath}`
 
-	const dir = path.join('cloud', name);
+	console.log('name', name)
+	console.log("fileName", fileName) 
+	console.log('filePath',filePath)
+	console.log("filePathParam", filePathParam)
 
-	try{	
-		console.log(`Creating directory: ${dir}`);
-		command.run("mkdir", [dir]);
-	} catch (err) {
-		console.log('directory already exist');
-	}
+	console.log(`File saved at: ${filePath}`);
 
-	filePath = path.join(__dirname, [dir])
+	command.run["npx", ["wrangler", "r2", "bucket", "create", req.body.name]]
+	command.run["npx", ["wrangler", "r2", "object", "put", filePath, filePathParam]]
 
-	//save file to filePath
-
-})
+	res.json({ message: '✅ File uploaded successfully', filePath: filePath });
+});
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);

@@ -32,6 +32,5 @@ module.exports = {
     start,
     getUserByEmail,
     insertUser,
-    updateUserCookie,
     getUserByCookie
 };

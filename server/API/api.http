@@ -18,3 +18,11 @@ Content-Type: application/json
   "email": "frida2@example.com",
   "password": "123456"
 }
+
+### send file
+POST http://localhost:3000/file
+Content-Type: multipart/form-data
+
+name=frida2
+file=@/home/atia/Documentos/1.png
+
