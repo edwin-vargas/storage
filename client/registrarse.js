@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Mostrar el modal de éxito
                 document.getElementById('success-modal').style.display = 'block';
 
+                localStorage.setItem('name', data.user)
+
                 // Redirigir al inicio de sesión después de 2 segundos
                 setTimeout(() => {
                     window.location.href = 'sing_in.html';

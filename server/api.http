@@ -3,8 +3,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "name": "aurora",
-  "email": "aurora@example.com",
+  "name": "edwin",
+  "email": "edwin@example.com",
   "password": "123456"
 }
 

@@ -21,7 +21,7 @@ app.use(cors({
 	origin: (origin, callback) => {
 		const ACCEPTED_ORIGINS = [
 			'http://localhost:3000',
-			'https://gmq17x09-3000.usw3.devtunnels.ms'
+			'http://127.0.0.1:3000'
 		]
 
 		if (ACCEPTED_ORIGINS.includes(origin)) {
@@ -58,7 +58,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 //----------------------------------------------------------
 app.get("/", (req, res) => {
-  res.sendFile(path.join(publicDirectoryPath, "inicio.html"));
+  res.sendFile(path.join(publicDirectoryPath, "sing_in.html"));
 });
 
 app.post('/login', (req, res) => {
@@ -92,7 +92,7 @@ app.post('/register', (req, res) => {
 
 				command.run("npx", ["wrangler", "r2", "bucket", "create", name]);
 
-        res.json({ message: '✅ User registered successfully' });
+        res.json({ user: name });
     });
 });
 
